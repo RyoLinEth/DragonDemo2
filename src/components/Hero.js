@@ -101,6 +101,15 @@ const GallerySection = ({ defaultAccount }) => {
     }
 
     const approveUsdtToIdo = async (amount) => {
+        if (defaultAccount === null) {
+
+            setContent([
+                `Wallet Not Connected`,
+                `Please Connect Your Wallet`,
+                null
+            ])
+            return;
+        }
         const approvingAmount = ethers.utils.formatEther(amount);
         setContent([
             `Approve ${approvingAmount} USDT`,
@@ -133,7 +142,6 @@ const GallerySection = ({ defaultAccount }) => {
                 })
         } catch (error) {
             console.log(error)
-
             setContent([
                 `Failed to Approve`,
                 `Failed to approve ${approvingAmount} USDT to the IDO contract`,
@@ -177,6 +185,11 @@ const GallerySection = ({ defaultAccount }) => {
                 })
         } catch (err) {
             console.log(err)
+            setContent([
+                `Failed to Send ${idoAmount} USDT`,
+                `${err.reason}`,
+                null
+            ])
         }
     }
 

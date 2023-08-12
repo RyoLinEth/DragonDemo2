@@ -6,6 +6,7 @@ import HeroSelection from './components/Hero';
 import GallerySection from './components/GallerySelection';
 import StoreSection from './components/StoreSection';
 import DragonTokenIntroduction from './components/DragonCoinIntro';
+import ContactSection from './components/ContactSection';
 
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
       <DragonTokenIntroduction />
       <Divider />
       <StoreSection />
+      <Divider />
+      <ContactSection defaultAccount={defaultAccount} />
       <Divider />
     </div>
   );

@@ -89,9 +89,14 @@ const Navbar = ({ defaultAccountChange }) => {
                         </li>
                         <li className="plain-link">
                             <a href="#contact" onClick={closeMenu}>
-                                Social
+                                Link
                             </a>
                         </li>
+                        {/* <li className="plain-link">
+                            <a href="#contact" onClick={closeMenu}>
+                                Social
+                            </a>
+                        </li> */}
                     </ul>
                 </div>
             </div>

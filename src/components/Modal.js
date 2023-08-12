@@ -63,7 +63,9 @@ const Modal = ({ isOpen, onClose, content }) => {
 
                         <p style={{
                             color: 'darkorange',
-                            padding: '10px'
+                            padding: '10px',
+                            display: 'flex',
+                            justifyContent: 'center'
                         }}>
                             {content[2] !== null &&
                                 <a href={content[2]} target="_blank" rel="noopener noreferrer">

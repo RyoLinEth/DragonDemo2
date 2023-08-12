@@ -5,7 +5,7 @@ const GallerySection = () => {
             <section className="gallery" id="home">
                 <div className="container">
                     <div className="row">
-                        <h2>The Dragon Coin</h2>
+                        <h2>The Dragon</h2>
                         <p className="section-description">
                             <br />This time, something would be different.
                         </p>

@@ -14,6 +14,9 @@ const ContactForm = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="contact-form">
+      <span style={{ color: '#ECD19A', }}>
+        Generate Manual Link
+      </span>
       <div className="row">
         <div className="col-sm-4 label-container">
           <label htmlFor="name">Address: </label>
@@ -64,7 +67,7 @@ const ContactSection = ({ defaultAccount }) => {
 
   return (
     <div className="row pattern">
-      <section className="contact" id="contact">
+      <section className="contact" id="link">
         <div className="container" style={{ padding: '10px' }}>
           <div className="row">
             <h2>Summon Partners</h2>

@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import swal from 'sweetalert'
 
-const WalletConnect = ({ defaultAccountChange }) => {
+const WalletConnect = ({ defaultAccountChange, defaultChainChange }) => {
     const [defaultAccount, setDefaultAccount] = useState(null)
     const [connectButtonText, setConnectButtonText] = useState("Connect Wallet")
+    const [currentNetworkName, setCurrentNetworkName] = useState(null)
+
+    const networks = [
+        // { id: "0x45c", name: "Core" },
+        { id: "0x61", name: "BSCTest" },
+        // { id: "0x2105", name: "Base" },
+        // { id: "0xa", name: "OP" },
+        // { id: "0x89", name: "Polygon" },
+        // { id: "0xa4b1", name: "ARB" },
+        { id: "0x38", name: "BSC" },
+        { id: "0x1", name: "ETH" },
+    ]
+
 
     useEffect(() => {
         changingAccount();
@@ -12,6 +25,9 @@ const WalletConnect = ({ defaultAccountChange }) => {
     const changingAccount = async () => {
         if (window.ethereum) {
             window.ethereum.on('accountsChanged', () => {
+                connectWalletHandler()
+            })
+            window.ethereum.on('chainChanged', () => {
                 connectWalletHandler()
             })
         }
@@ -38,18 +54,24 @@ const WalletConnect = ({ defaultAccountChange }) => {
     const checkCorrectNetwork = async () => {
         const { ethereum } = window
         const chainId = await ethereum.request({ method: 'eth_chainId' })
-        if (chainId !== "0x38") console.log("Wrong Chain");
-        console.log('Connected to chain:' + chainId)
+        handleDefaultChainChange(chainId)
     }
 
+    const handleDefaultChainChange = (value) => {
+        console.log("Chain Change to " + value);
+        const tempNetworkName = networks.find((currentNetwork) => currentNetwork.id === value)?.name || "Not Supported Chain";
+        setCurrentNetworkName(tempNetworkName);
+        defaultChainChange(tempNetworkName)
+    }
     return (
         <div className="btnConnect">
             <button
                 onClick={connectWalletHandler}
                 // className="btn btn-primary rounded-pill"
                 style={{
-                    maxWidth: '120px',
+                    maxWidth: '160px',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
                     height: '45px',
@@ -58,7 +80,16 @@ const WalletConnect = ({ defaultAccountChange }) => {
                     color: '#ECD19A',
                     fontSize: '15px'
                 }}
-            >{connectButtonText}</button>
+            >
+                {
+                    currentNetworkName === null
+                        ? ""
+                        : <span>{currentNetworkName}<br /></span>
+                }
+                {
+                    connectButtonText
+                }
+            </button>
         </div>
     )
 }

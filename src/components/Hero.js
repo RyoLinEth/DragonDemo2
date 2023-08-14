@@ -8,12 +8,10 @@ import { ethers } from 'ethers'
 import usdtabi from '../ABI/usdtabi.json'
 import idoabi from '../ABI/idoabi.json'
 
-const GallerySection = ({ defaultAccount }) => {
+const GallerySection = ({ defaultAccount, defaultChain }) => {
     const IDOContractAddress = "0xaD26a6143a0ddC0cdC44402caD59405973e1425d";
     const USDTContractAddress = "0xB42263540b731003ce96d02D5c82A1Eb586ED187";
     const defaultRef = "0x0D971B7B7520f1FCE9b90665CA59952ea2c52b04"
-
-    console.log("In IDO " + defaultAccount)
 
     const dragons = [
         {
@@ -76,7 +74,24 @@ const GallerySection = ({ defaultAccount }) => {
     useEffect(() => {
         if (defaultAccount === null) return;
         updateEthers();
-    }, [defaultAccount])
+    }, [defaultAccount, defaultChain])
+
+    const getLink = () => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const inviter = urlParams.get('inviter');
+
+        if (inviter) {
+            if (inviter.length === 42)
+                setRef(inviter);
+        } else {
+            console.log("No Inviter")
+        }
+    }
+
+    useEffect(() => {
+        getLink()
+    }, [])
 
 
     const toggleDescription = (index) => {
@@ -227,7 +242,28 @@ const GallerySection = ({ defaultAccount }) => {
 
                     <Modal isOpen={modalOpen} onClose={handleCloseModal} content={content} />
                     <div className="row">
-                        <h2 style={{ padding: '10px' }}>Choose your Dragon</h2>
+                        <h2 style={{ padding: '10px', paddingTop: '0px' }}>
+                            IDO <br /><br />
+                            Choose your Dragon
+                        </h2>
+                        <h3 style={{ fontSize: '20px' }}>
+                            Inviter :
+                            {
+                                ref.toLocaleLowerCase() === defaultRef.toLocaleLowerCase() &&
+                                "No inviter"
+                            }
+                            {
+                                ref.toLocaleLowerCase() !== defaultRef.toLocaleLowerCase() &&
+                                `${ref.slice(0, 4)}...${ref.slice(-4)}`
+                            }
+                            {
+                                defaultChain !== null &&
+                                <span>
+                                    <br />
+                                    Network : {defaultChain}
+                                </span>
+                            }
+                        </h3>
                         {dragons.map((dragon, index) => (
                             <article key={index} className={`col-sm-5 col-md-3 box features-item thumbnail-100`} data-toggle="modal" data-target="#shop-modal">
                                 <img className="features-img" src={dragon.imgSrc} alt={`${dragon.name} Hero Character`}

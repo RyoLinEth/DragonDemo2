@@ -1,13 +1,92 @@
-import React from 'react';
+import React, { useState } from 'react';
+const LinkWithSymbol = ({ link, title }) => {
+    const [isSymbolVisible, setIsSymbolVisible] = useState(false);
+
+    const handleMouseEnter = () => {
+        setIsSymbolVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsSymbolVisible(false);
+    };
+
+    const containerStyle = {
+        display: 'inline-block',
+        position: 'relative',
+        verticalAlign: 'middle', // Keep the text and symbols aligned vertically
+    };
+
+    const textWithSymbolStyle = {
+        display: 'inline-block',
+    };
+
+    const symbolStyle = {
+        position: 'absolute',
+        top: '50%', // Position the symbols in the middle of the container
+        fontSize: '20px',
+        opacity: isSymbolVisible ? 1 : 0,
+        transition: 'opacity 0.2s ease-in-out',
+    };
+
+    const leftSymbolStyle = {
+        ...symbolStyle,
+        left: '-25px', // Adjust the position for the left symbol
+        transform: 'translateY(-50%)', // Keep the symbol vertically centered
+    };
+
+    const rightSymbolStyle = {
+        ...symbolStyle,
+        right: '-25px', // Adjust the position for the right symbol
+        transform: 'translateY(-50%)', // Keep the symbol vertically centered
+    };
+
+    return (
+        <a
+            href={link}
+            style={{
+                cursor: 'pointer',
+                textDecoration: 'none'
+            }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            <h3>
+                <span style={containerStyle}>
+                    <span style={textWithSymbolStyle}>{title}</span>
+                    <span style={leftSymbolStyle}>🔥</span>
+                    <span style={rightSymbolStyle}>🔥</span>
+                </span>
+            </h3>
+        </a>
+    );
+};
 const GallerySection = () => {
+    const linkArray = [
+        {
+            title: "Join IDO",
+            link: "#ido"
+        },
+        {
+            title: "Link",
+            link: "#link"
+        },
+        {
+            title: "Introduction",
+            link: "#dragons"
+        },
+        {
+            title: "Mechanism",
+            link: "#mechanism"
+        },
+    ]
     return (
         <div className="row pattern-dark">
             <section className="gallery" id="home">
                 <div className="container">
                     <div className="row">
-                        <h2>The Dragon</h2>
+                        <h2>The Dragon Map</h2>
                         <p className="section-description">
-                            <br />This time, something would be different.
+                            <br />Available On BSC / ETH
                         </p>
                     </div>
                 </div>
@@ -26,12 +105,9 @@ const GallerySection = () => {
                         <div className="carousel-inner" role="listbox" style={{
                             display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                         }}>
-                            <a href="#ido" style={{
-                                cursor: 'pointer',
-                                textDecoration: 'none'
-                            }}>
-                                <h3>Join IDO</h3>
-                            </a>
+                            {linkArray.map((link, index) => (
+                                <LinkWithSymbol key={link.title} link={link.link} title={link.title} />
+                            ))}
                         </div>
                         {/* Controls */}
                     </div>

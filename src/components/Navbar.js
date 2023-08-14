@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import WalletConnect from './WallectConnector';
 
-const Navbar = ({ defaultAccountChange }) => {
+const Navbar = ({ defaultAccountChange, defaultChainChange }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     const toggleMenu = () => {
@@ -16,6 +16,10 @@ const Navbar = ({ defaultAccountChange }) => {
         defaultAccountChange(value)
     };
 
+    const handleDefaultChainChange = (value) => {
+        defaultChainChange(value)
+    }
+    
     return (
         <nav className="navbar navbar-inverse navbar-custom navbar-fixed-top">
             <div className="container">
@@ -24,18 +28,10 @@ const Navbar = ({ defaultAccountChange }) => {
                         <a className="navbar-brand navbar-logo" href="#home" style={{
                             color: 'transparent'
                         }}>Home</a>
-                        <button
-                            type="button"
-                            className="search-button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                        >
-                            <span className="ion-search"></span>
-                        </button>
                         <div style={{ marginLeft: '24vw' }}>
                             <WalletConnect
                                 defaultAccountChange={handleDefaultAccountChange}
+                                defaultChainChange={handleDefaultChainChange}
                             />
                         </div>
                     </div>
@@ -78,6 +74,11 @@ const Navbar = ({ defaultAccountChange }) => {
                                 IDO</a>
                         </li>
                         <li className="plain-link">
+                            <a href="#link" onClick={closeMenu}>
+                                Link
+                            </a>
+                        </li>
+                        <li className="plain-link">
                             <a href="#dragons" onClick={closeMenu}>
                                 About
                             </a>
@@ -85,11 +86,6 @@ const Navbar = ({ defaultAccountChange }) => {
                         <li className="plain-link">
                             <a href="#mechanism" onClick={closeMenu}>
                                 Mechanism
-                            </a>
-                        </li>
-                        <li className="plain-link">
-                            <a href="#contact" onClick={closeMenu}>
-                                Link
                             </a>
                         </li>
                         {/* <li className="plain-link">

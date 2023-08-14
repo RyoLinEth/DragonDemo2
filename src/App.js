@@ -11,23 +11,28 @@ import ContactSection from './components/ContactSection';
 function App() {
 
   const [defaultAccount, setDefaultAccount] = useState(null);
+  const [defaultChain, setDefaultChain] = useState(null);
 
   const handleDefaultAccountChange = (value) => {
     setDefaultAccount(value);
   }
+  const handleDefaultChainChange = (value) => {
+    setDefaultChain(value);
+  }
+
   return (
     <div className="App">
-      <Navbar defaultAccountChange={handleDefaultAccountChange} />
+      <Navbar defaultAccountChange={handleDefaultAccountChange} defaultChainChange={handleDefaultChainChange}/>
       <Divider />
       <GallerySection />
       <Divider />
-      <HeroSelection defaultAccount={defaultAccount} />
+      <HeroSelection defaultAccount={defaultAccount} defaultChain={defaultChain}/>
+      <Divider />
+      <ContactSection defaultAccount={defaultAccount} />
       <Divider />
       <DragonTokenIntroduction />
       <Divider />
       <StoreSection />
-      <Divider />
-      <ContactSection defaultAccount={defaultAccount} />
       <Divider />
     </div>
   );

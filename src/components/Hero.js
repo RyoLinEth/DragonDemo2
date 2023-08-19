@@ -43,12 +43,16 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
             amount: ethers.utils.parseEther("500")
         }
     ];
+
     const [showDescriptions, setShowDescriptions] = useState(Array(dragons.length).fill(false));
 
     const [provider, setProvider] = useState(null);
     const [signer, setSigner] = useState(null);
     const [contract, setContract] = useState(null);
     const [usdtContract, setUsdtContract] = useState(null);
+
+    const [isIdoActive, setIsIdoActive] = useState(false);
+    const [isClaimActive, setIsClaimActive] = useState(false);
     const [ref, setRef] = useState(defaultRef);
     const [modalOpen, setModalOpen] = useState(false);
     const [content, setContent] = useState([null, null, null]);
@@ -66,6 +70,12 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
 
             const tempUsdtContract = new ethers.Contract(USDTContractAddress, usdtabi, tempSigner)
             setUsdtContract(tempUsdtContract);
+
+            const tempActive = await tempContract.isIDOActive();
+            setIsIdoActive(tempActive);
+
+            const tempClaim = await tempContract.isClaimActive();
+            setIsClaimActive(tempClaim);
         } catch (err) {
             console.log(err)
         }
@@ -103,6 +113,24 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
     const approveAndSendTx = async (amount) => {
         handleOpenModal(true)
 
+        if (defaultAccount === null) {
+
+            setContent([
+                `Wallet Not Connected`,
+                `Please Connect Your Wallet`,
+                null
+            ])
+            return;
+        }
+        if (!isIdoActive) {
+            setContent([
+                `IDO Not Active`,
+                `Cannot join IDO right now`,
+                null
+            ])
+            return;
+        }
+        setContent()
         try {
             const isApproved = await checkApproved(amount);
             if (!isApproved) {
@@ -115,9 +143,62 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
         }
     }
 
-    const approveUsdtToIdo = async (amount) => {
+    const handleClaim = async () => {
+        handleOpenModal(true)
         if (defaultAccount === null) {
 
+            setContent([
+                `Wallet Not Connected`,
+                `Please Connect Your Wallet`,
+                null
+            ])
+            return;
+        }
+        if (!isClaimActive) {
+            setContent([
+                `Claim Not Acitve`,
+                `Cannot claim token right now`,
+                null
+            ])
+            return;
+        }
+
+        try {
+            setContent([
+                `Claiming Token`,
+                `The approving transaction is now on chain, please wait.`,
+                null
+            ])
+            const result = await contract.claimToken()
+            provider
+                .getTransaction(result.hash)
+                .then((tx) => {
+                    // 監聽交易上鍊事件
+                    tx.wait().then(async (receipt) => {
+                        //  授權成功
+                        try {
+                            setContent([
+                                `Token Claimed Successfully`,
+                                `Watch this transaction on chain`,
+                                `https://testnet.bscscan.com/tx/${result.hash}`
+                            ])
+                        } catch (err) {
+                            console.log(err)
+                        }
+                    })
+                })
+        } catch (err) {
+            console.log(err)
+            setContent([
+                `Failed to Claim`,
+                `${err.reason}`,
+                null
+            ])
+        }
+    }
+
+    const approveUsdtToIdo = async (amount) => {
+        if (defaultAccount === null) {
             setContent([
                 `Wallet Not Connected`,
                 `Please Connect Your Wallet`,
@@ -264,6 +345,16 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
                                 </span>
                             }
                         </h3>
+                        {isClaimActive &&
+                            <div className='row' style={{ display: 'flex', justifyContent: 'center' }}>
+                                <button type="submit" className="btn"
+                                    style={{ maxWidth: '40vw', display: 'flex', justifyContent: 'center' }}
+                                    onClick={handleClaim}
+                                >
+                                    Claim
+                                </button>
+                            </div>
+                        }
                         {dragons.map((dragon, index) => (
                             <article key={index} className={`col-sm-5 col-md-3 box features-item thumbnail-100`} data-toggle="modal" data-target="#shop-modal">
                                 <img className="features-img" src={dragon.imgSrc} alt={`${dragon.name} Hero Character`}

@@ -85,9 +85,9 @@ const GallerySection = () => {
                 <div className="container">
                     <div className="row">
                         <h2>The Dragon Map</h2>
-                        <p className="section-description">
-                            <br />Available On BSC / ETH
-                        </p>
+                        {/* <p className="section-description">
+                            <br />Available On BSC
+                        </p> */}
                     </div>
                 </div>
                 <div className="row">

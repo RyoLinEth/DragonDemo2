@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import Copy from './Copy'
 const ContactForm = ({ onSubmit }) => {
   const [address, setAddress] = useState('');
 
@@ -91,7 +91,11 @@ const ContactSection = ({ defaultAccount }) => {
                 wordBreak: 'break-word',
                 color: 'darkorange'
               }}>
-              <p>Default Link: <br />
+              <p>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <span style={{ marginRight: '10px' }}>Default Link:</span>
+                  <Copy text={defaultLink} />
+                </div>
                 <span style={{ color: '#ECD19A' }}>
                   {
                     defaultAccount === null
@@ -101,7 +105,11 @@ const ContactSection = ({ defaultAccount }) => {
                 </span>
               </p>
               {invitationLink && (
-                <p>Manual Link: <br />
+                <p>
+                  <div style={{ display: 'flex', flexDirection: 'row' }}>
+                    <span style={{ marginRight: '10px' }}>Manual Link:</span>
+                    <Copy text={invitationLink} />
+                  </div>
                   <span style={{ color: '#ECD19A' }}>{invitationLink}</span>
                 </p>
               )}

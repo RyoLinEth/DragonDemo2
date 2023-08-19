@@ -9,9 +9,9 @@ import usdtabi from '../ABI/usdtabi.json'
 import idoabi from '../ABI/idoabi.json'
 
 const GallerySection = ({ defaultAccount, defaultChain }) => {
-    const IDOContractAddress = "0xaD26a6143a0ddC0cdC44402caD59405973e1425d";
-    const USDTContractAddress = "0xB42263540b731003ce96d02D5c82A1Eb586ED187";
-    const defaultRef = "0x0D971B7B7520f1FCE9b90665CA59952ea2c52b04"
+    const IDOContractAddress = "0xEADd37AbDF396adeB1035Fe3530C5222fE77f544";
+    const USDTContractAddress = "0x55d398326f99059fF775485246999027B3197955";
+    const defaultRef = "0xa6905065b13a98FC1ACF812A5f3D1FcB1EE0F48A"
 
     const dragons = [
         {
@@ -180,7 +180,7 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
                             setContent([
                                 `Token Claimed Successfully`,
                                 `Watch this transaction on chain`,
-                                `https://testnet.bscscan.com/tx/${result.hash}`
+                                `https://bscscan.com/tx/${result.hash}`
                             ])
                         } catch (err) {
                             console.log(err)
@@ -272,7 +272,7 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
                             setContent([
                                 `IDO Joined Successfully`,
                                 `Watch this transaction on chain`,
-                                `https://testnet.bscscan.com/tx/${result.hash}`
+                                `https://bscscan.com/tx/${result.hash}`
                             ])
                         } catch (err) {
                             console.log(err)

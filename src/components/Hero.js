@@ -112,9 +112,7 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
 
     const approveAndSendTx = async (amount) => {
         handleOpenModal(true)
-
         if (defaultAccount === null) {
-
             setContent([
                 `Wallet Not Connected`,
                 `Please Connect Your Wallet`,
@@ -130,7 +128,6 @@ const GallerySection = ({ defaultAccount, defaultChain }) => {
             ])
             return;
         }
-        setContent()
         try {
             const isApproved = await checkApproved(amount);
             if (!isApproved) {

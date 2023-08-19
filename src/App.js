@@ -22,11 +22,13 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar defaultAccountChange={handleDefaultAccountChange} defaultChainChange={handleDefaultChainChange}/>
+      <Navbar
+      //  defaultAccountChange={handleDefaultAccountChange} defaultChainChange={handleDefaultChainChange}
+      />
       <Divider />
-      <GallerySection />
+      <GallerySection defaultAccountChange={handleDefaultAccountChange} defaultChainChange={handleDefaultChainChange} />
       <Divider />
-      <HeroSelection defaultAccount={defaultAccount} defaultChain={defaultChain}/>
+      <HeroSelection defaultAccount={defaultAccount} defaultChain={defaultChain} />
       <Divider />
       <ContactSection defaultAccount={defaultAccount} />
       <Divider />

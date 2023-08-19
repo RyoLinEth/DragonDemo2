@@ -12,13 +12,13 @@ const Navbar = ({ defaultAccountChange, defaultChainChange }) => {
         setIsExpanded(false);
     };
 
-    const handleDefaultAccountChange = (value) => {
-        defaultAccountChange(value)
-    };
+    // const handleDefaultAccountChange = (value) => {
+    //     defaultAccountChange(value)
+    // };
 
-    const handleDefaultChainChange = (value) => {
-        defaultChainChange(value)
-    }
+    // const handleDefaultChainChange = (value) => {
+    //     defaultChainChange(value)
+    // }
     
     return (
         <nav className="navbar navbar-inverse navbar-custom navbar-fixed-top">
@@ -28,12 +28,12 @@ const Navbar = ({ defaultAccountChange, defaultChainChange }) => {
                         <a className="navbar-brand navbar-logo" href="#home" style={{
                             color: 'transparent'
                         }}>Home</a>
-                        <div style={{ marginLeft: '24vw' }}>
+                        {/* <div style={{ marginLeft: '24vw' }}>
                             <WalletConnect
                                 defaultAccountChange={handleDefaultAccountChange}
                                 defaultChainChange={handleDefaultChainChange}
                             />
-                        </div>
+                        </div> */}
                     </div>
                     <div className="dropdown-menu dropdown-search-box animated fadeIn">
                         <span className="ion-android-arrow-dropup searchbox-caret animated fadeIn"></span>

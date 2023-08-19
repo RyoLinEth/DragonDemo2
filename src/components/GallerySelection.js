@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import WalletConnect from './WallectConnector';
 const LinkWithSymbol = ({ link, title }) => {
     const [isSymbolVisible, setIsSymbolVisible] = useState(false);
 
@@ -40,6 +41,7 @@ const LinkWithSymbol = ({ link, title }) => {
         transform: 'translateY(-50%)', // Keep the symbol vertically centered
     };
 
+
     return (
         <a
             href={link}
@@ -60,7 +62,16 @@ const LinkWithSymbol = ({ link, title }) => {
         </a>
     );
 };
-const GallerySection = () => {
+const GallerySection = ({ defaultAccountChange, defaultChainChange }) => {
+
+    const handleDefaultAccountChange = (value) => {
+        defaultAccountChange(value)
+    };
+
+    const handleDefaultChainChange = (value) => {
+        defaultChainChange(value)
+    }
+
     const linkArray = [
         {
             title: "Join IDO",
@@ -85,9 +96,26 @@ const GallerySection = () => {
                 <div className="container">
                     <div className="row">
                         <h2>The Dragon Map</h2>
-                        {/* <p className="section-description">
-                            <br />Available On BSC
-                        </p> */}
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            margin: '20px',
+                        }}>
+                            <button
+                                style={{
+                                    backgroundColor: 'transparent',
+                                    borderRadius: '10px',
+                                    border: '1px solid #EDC19A'
+
+                                }}
+                            >
+                                <WalletConnect
+                                    defaultAccountChange={handleDefaultAccountChange}
+                                    defaultChainChange={handleDefaultChainChange}
+                                />
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="row">
